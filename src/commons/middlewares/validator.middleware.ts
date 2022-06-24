@@ -8,7 +8,7 @@ interface ClassParam {
 export const validateBody = (ClassType: ClassParam): RequestHandler => {
   const validationOptions = {
     whitelist: true,
-    validationError: { target: false, value: false },
+    validationError: { target: false, value: true },
   }
 
   return async ({ body }: Request, res: Response, next: NextFunction) => {
@@ -19,7 +19,8 @@ export const validateBody = (ClassType: ClassParam): RequestHandler => {
 
     if (validateResult.length !== 0) {
       res.status(400).send({
-        error: validateResult.map(({ property, constraints }) => ({
+        error: validateResult.map(({ property, value, constraints }) => ({
+          value,
           property,
           constraints,
         })),
