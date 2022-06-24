@@ -30,4 +30,4 @@ async function login(req: Request, res: Response) {
   userRepo.update({ id: foundUser.id }, { token })
   res.json({ token })
 }
-export { login }
+export const loginHandler = { login }

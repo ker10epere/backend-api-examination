@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { validateBody } from '../commons/middlewares/validator.middleware'
 import { LoginDTO } from '../dtos/login.dto'
-import * as loginController from './login.controller'
+import { loginHandler } from './login.handler'
 
 const router = Router()
 
-router.post('/', validateBody(LoginDTO), loginController.login)
+router.post('/', validateBody(LoginDTO), loginHandler.login)
 
 export const loginRouter = router

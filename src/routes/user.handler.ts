@@ -21,4 +21,4 @@ async function listUser(req: Request, res: Response) {
   return res.status(200).json(users)
 }
 
-export { listUser, createUser }
+export const userHandler = { listUser, createUser }
