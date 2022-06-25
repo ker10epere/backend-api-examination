@@ -2,13 +2,13 @@ import { Router, json } from 'express'
 import { loginRouter } from './routes/login.route'
 import { userRouter } from './routes/user.route'
 
-const router = Router()
+const routers = Router()
 
 // middlewares
-router.use(json())
+routers.use(json())
 
 // controllers
-router.use('/user', userRouter)
-router.use('/login', loginRouter)
+routers.use('/user', userRouter)
+routers.use('/login', loginRouter)
 
-export { router }
+export { routers }

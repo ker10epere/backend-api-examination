@@ -1,11 +1,13 @@
 import { validate } from 'class-validator'
 import { Request, Response, NextFunction, RequestHandler } from 'express'
 
-interface ClassParam {
-  new (params?: any): any
+interface ClassParam<T extends object> {
+  new (params?: T): T
 }
 
-export const validateBody = (ClassType: ClassParam): RequestHandler => {
+export const validateBody = <T extends object>(
+  ClassType: ClassParam<T>
+): RequestHandler => {
   const validationOptions = {
     whitelist: true,
     validationError: { target: false, value: true },

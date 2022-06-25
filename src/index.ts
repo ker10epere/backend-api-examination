@@ -1,6 +1,6 @@
 import express from 'express'
 import { AppDataSource } from './configs/typeorm/app-datasource.config'
-import { router } from './app'
+import { routers } from './app'
 import { dataSourceProvider } from './commons/middlewares/datasource.middleware'
 const { PORT = 3000 } = process.env
 
@@ -9,7 +9,7 @@ AppDataSource.initialize()
     const app = express()
 
     app.use(dataSourceProvider(ds))
-    app.use(router)
+    app.use(routers)
 
     app.listen(PORT, () => console.log(`running on PORT ${PORT}`))
   })

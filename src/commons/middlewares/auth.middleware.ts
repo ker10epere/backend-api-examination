@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from 'express'
+import { isError } from '../interfaces/error.interface'
 import { MyRequest } from '../interfaces/express.interface'
-import {
-  verifyAuth,
-  parseTokenFromBearer,
-  generateUserToken,
-} from '../utils/jwt.util'
+import { verifyAuth, parseTokenFromBearer } from '../utils/jwt.util'
 
-export const auth = async (req: Request, res: Response, next: NextFunction) => {
+export const auth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   const myreq = req as MyRequest
   const { authorization } = myreq.headers
 
@@ -16,7 +17,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   const userPayload = verifyAuth(myreq)
-  if (userPayload === null || typeof userPayload === 'string') {
+
+  if (isError(userPayload)) {
     res.status(401).send()
     return
   }
@@ -33,11 +35,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     return
   }
 
-  // const { id, username } = foundUser
-
-  // const newToken = generateUserToken(username)
-
-  // userRepo.update({ id }, { token: newToken })
   myreq.user = foundUser
 
   next()

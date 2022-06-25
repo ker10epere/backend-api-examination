@@ -14,12 +14,12 @@ export const AppDataSource = (() => {
   return new DataSource({
     type: 'mysql',
     url: DATABASE_URL,
-    // synchronize: isDevEnv,
+    synchronize: isDevEnv,
     logging: false,
     entities: [entitiesMatcher],
     migrations: [migrationsMatcher],
     // subscribers: [],
-    // dropSchema: isDevEnv,
+    dropSchema: isDevEnv,
   })
 })()
 
