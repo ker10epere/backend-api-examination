@@ -62,3 +62,7 @@ typings/
 
 # test.+
 test*
+
+# build files
+dist
+build
