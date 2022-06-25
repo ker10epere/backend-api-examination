@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
+import { Repository } from 'typeorm'
+import { AdminId } from '../../models/admin-id.entity'
 import { User } from '../../models/user.entity'
 import { ErrorMessage, isError } from '../interfaces/error.interface'
 import { MyRequest } from '../interfaces/express.interface'
@@ -57,4 +59,44 @@ const findUser = async (
     }
   }
 }
-export { auth }
+
+const checkAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const {
+    dataSource: { adminIdRepo },
+    user: { id },
+  } = req as MyRequest
+  const isAdmin = await checkIsAdmin(id, adminIdRepo)
+  if (isError(isAdmin)) {
+    res.status(401).send(isAdmin)
+    return
+  }
+
+  if (!isAdmin) {
+    res.status(401).send({ error: 'user not admin' })
+    return
+  }
+  next()
+}
+
+const checkIsAdmin = async (
+  userId: number,
+  adminIdRepo: Repository<AdminId>
+): Promise<boolean | ErrorMessage> => {
+  try {
+    const foundAdminCount = await adminIdRepo.count({
+      where: {
+        userId,
+      },
+    })
+    return foundAdminCount === 1
+  } catch (error) {
+    console.log(error)
+    return { error }
+  }
+}
+
+export { auth, checkAdmin }
