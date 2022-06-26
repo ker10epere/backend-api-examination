@@ -1,26 +1,31 @@
-import { DataSource } from 'typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm'
 import { join } from 'path'
 import { Environment } from '../../commons/interfaces/node-process.interface'
+import { srcDir } from '../../commons/utils/constants.util'
 
-export const AppDataSource = (() => {
-  const { DATABASE_URL, ENV }: Environment = process.env as Environment
+const { DATABASE_URL, ENV }: Environment = process.env as Environment
+const isDevEnv = checkDevEnv(ENV)
 
-  const srcDir = join(__dirname, '../..')
-  const isDevEnv = checkDevEnv(ENV)
-  const migrationsMatcher = `${join(srcDir, 'migrations')}/*migration.{ts,js}`
-  const entitiesMatcher = `${srcDir}/models/*.entity.{ts,js}`
-  // console.log({ isDevEnv, migrationsMatcher, entitiesMatcher })
+const migrationsMatcher = `${join(
+  srcDir,
+  'database',
+  'migrations'
+)}/*migration.{ts,js}`
 
-  return new DataSource({
-    type: 'mysql',
-    url: DATABASE_URL,
-    synchronize: isDevEnv,
-    logging: false,
-    entities: [entitiesMatcher],
-    migrations: [migrationsMatcher],
-    dropSchema: isDevEnv,
-  })
-})()
+const entitiesMatcher = `${srcDir}/models/*.entity.{ts,js}`
+// console.log({ isDevEnv, migrationsMatcher, entitiesMatcher })
+
+export const dataSourceOptions: DataSourceOptions = {
+  type: 'mysql',
+  url: DATABASE_URL,
+  synchronize: isDevEnv,
+  logging: true,
+  entities: [entitiesMatcher],
+  migrations: [migrationsMatcher],
+  dropSchema: false,
+}
+
+export const AppDataSource = new DataSource(dataSourceOptions)
 
 function checkDevEnv(env: string): boolean {
   return ['DEV', 'STG'].some((item) => item === env)
