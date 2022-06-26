@@ -16,13 +16,13 @@ async function createUser(
   return res.status(201).send()
 }
 
-async function getUser(
-  req: Request,
-  res: Response
-): Promise<Response<null, Record<string, null>>> {
+async function getUser(req: Request, res: Response): Promise<unknown> {
   const { userRepo } = (req as MyRequest).dataSource
   const { id: idParam } = req.params
   try {
+    if (!idParam.match(/^\d$/)) {
+      return res.status(400).send({ error: 'param not a valid number' })
+    }
     const id = parseInt(idParam)
     const users = await userRepo.findOne({ where: { id } })
     return res.status(200).json(users)

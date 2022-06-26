@@ -6,6 +6,8 @@ import {
   IsOptional,
   MinLength,
   IsString,
+  ArrayNotEmpty,
+  IsArray,
 } from 'class-validator'
 
 export class AddUserDTO {
@@ -116,8 +118,9 @@ export class EditUserDTO {
 }
 
 export class DeleteUserDTO {
+  @IsArray()
+  @ArrayNotEmpty({ always: true })
   @IsNotEmpty({ each: true })
   @IsNumber({}, { each: true })
-  @Matches(/\d/)
   id!: number[]
 }
