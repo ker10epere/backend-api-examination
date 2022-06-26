@@ -7,4 +7,4 @@ const router = Router()
 
 router.post('/', validateBody(LoginDTO), loginHandler.login)
 
-export const loginRouter = router
+export default router

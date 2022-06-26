@@ -15,7 +15,7 @@ async function createUser(
   return res.status(201).send()
 }
 
-async function listUser(
+async function getUser(
   req: Request,
   res: Response
 ): Promise<Response<null, Record<string, null>>> {
@@ -26,4 +26,15 @@ async function listUser(
   return res.status(200).json(users)
 }
 
-export const userHandler = { listUser, createUser }
+async function listUsers(
+  req: Request,
+  res: Response
+): Promise<Response<null, Record<string, null>>> {
+  const {
+    dataSource: { userRepo },
+  } = req as MyRequest
+  const users = await userRepo.find()
+  return res.status(200).json(users)
+}
+
+export const userHandler = { listUsers, createUser }

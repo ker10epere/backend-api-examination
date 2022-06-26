@@ -6,7 +6,7 @@ import { userHandler } from './user.handler'
 
 const router = Router()
 
-router.get('/', checkAuth, userHandler.listUser)
+router.get('/', checkAuth, userHandler.listUsers)
 router.post('/', checkAuth, validateBody(User), userHandler.createUser)
 
-export const userRouter = router
+export default router
