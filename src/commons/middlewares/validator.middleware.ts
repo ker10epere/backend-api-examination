@@ -1,14 +1,22 @@
-import { validate } from 'class-validator'
+import { validate, ValidatorOptions } from 'class-validator'
 import { Request, Response, NextFunction, RequestHandler } from 'express'
 
 interface ClassParam<T extends object> {
   new (params?: T): T
 }
 
+interface ValidatorError {
+  value: unknown
+
+  property: string
+
+  constraints: unknown
+}
+
 export const validateBody = <T extends object>(
   ClassType: ClassParam<T>
 ): RequestHandler => {
-  const validationOptions = {
+  const validationOptions: ValidatorOptions = {
     whitelist: true,
     validationError: { target: false, value: true },
   }
@@ -21,11 +29,13 @@ export const validateBody = <T extends object>(
 
     if (validateResult.length !== 0) {
       res.status(400).send({
-        error: validateResult.map(({ property, value, constraints }) => ({
-          value,
-          property,
-          constraints,
-        })),
+        error: validateResult.map(
+          ({ property, value, constraints }): ValidatorError => ({
+            value,
+            property,
+            constraints,
+          })
+        ),
       })
       return
     }
