@@ -32,7 +32,7 @@ function generateUserToken(
   username: string,
   signOption: SignOptions = { expiresIn: '10h' }
 ) {
-  return sign(username, JWT_SECRET_KEY, signOption)
+  return sign({ username }, JWT_SECRET_KEY, signOption)
 }
 
 export { verifyAuth, parseTokenFromBearer, generateUserToken }
