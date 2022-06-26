@@ -18,7 +18,6 @@ export const AppDataSource = (() => {
     logging: false,
     entities: [entitiesMatcher],
     migrations: [migrationsMatcher],
-    // subscribers: [],
     dropSchema: isDevEnv,
   })
 })()

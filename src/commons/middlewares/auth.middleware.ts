@@ -8,6 +8,14 @@ import { UserPayload } from '../interfaces/jwt.interface'
 import { verifyAuth, parseTokenFromBearer } from '../utils/jwt.util'
 import { isTypePresent } from '../utils/type-checker.util'
 
+/**
+ * @note requires preceding dataSourceProvicer middleware
+ * @description a middleware that restricts access to every user not signed in
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>} null
+ */
 const checkAuth = async (
   req: Request,
   res: Response,
@@ -60,6 +68,14 @@ const findUser = async (
   }
 }
 
+/**
+ * @note requires preceding checkAuth middleware
+ * @description a middleware that retricts access to every user signed in except admin
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ */
 const checkAdmin = async (
   req: Request,
   res: Response,
