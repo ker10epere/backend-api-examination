@@ -1,9 +1,9 @@
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { program } from 'commander'
 import { runSeeders, SeederOptions, setDataSource } from 'typeorm-extension'
-import UserSeeder from '../../database/seeds/user.seeder'
-import userFactory from '../../models/factories/user.factory'
-import { dataSourceOptions } from './app-datasource.config'
+import UserSeeder from './seeds/user.seeder'
+import userFactory from './factories/user.factory'
+import { dataSourceOptions } from '../configs/typeorm/app-datasource.config'
 
 const options: DataSourceOptions & SeederOptions = Object.assign(
   dataSourceOptions,

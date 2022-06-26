@@ -17,7 +17,7 @@
     "db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
     "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop",
     "typeorm-extension": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js",
-    "seed": "env-cmd ts-node src/configs/typeorm/seeder.typeorm.executable.ts"
+    "seed": "env-cmd ts-node src/database/seeder.typeorm.executable.ts"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",

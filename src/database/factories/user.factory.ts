@@ -1,7 +1,7 @@
 import { Faker } from '@faker-js/faker'
 import { setSeederFactory } from 'typeorm-extension'
 import { generateUserToken } from '../../commons/utils/jwt.util'
-import { User } from '../user.entity'
+import { User } from '../../models/user.entity'
 
 export default setSeederFactory(User, (faker: Faker) => {
   const user = new User()
