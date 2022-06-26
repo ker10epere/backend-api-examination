@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction, RequestHandler } from 'express'
 import { Repository } from 'typeorm'
 import { AdminId } from '../../models/admin-id.entity'
 import { User } from '../../models/user.entity'
@@ -16,7 +16,7 @@ import { isTypePresent } from '../utils/type-checker.util'
  * @param next
  * @returns {Promise<void>} null
  */
-const checkAuth = async (
+const checkAuth: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -76,7 +76,7 @@ const findUser = async (
  * @param next
  * @returns
  */
-const checkAdmin = async (
+const checkAdmin: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction

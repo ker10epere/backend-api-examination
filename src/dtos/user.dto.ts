@@ -118,5 +118,6 @@ export class EditUserDTO {
 export class DeleteUserDTO {
   @IsNotEmpty({ each: true })
   @IsNumber({}, { each: true })
+  @Matches(/\d/)
   id!: number[]
 }
