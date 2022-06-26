@@ -1,4 +1,3 @@
-import { compare } from 'bcryptjs'
 import { Response, Request } from 'express'
 import { MyRequest } from '../commons/interfaces/express.interface'
 import { generateUserToken } from '../commons/utils/jwt.util'
@@ -20,7 +19,7 @@ async function login(req: Request, res: Response) {
     return
   }
 
-  if (!(await compare(password, foundUser.password))) {
+  if (!(await foundUser.comparePassword(password))) {
     res.status(400).send({ message: 'invalid password' })
     return
   }

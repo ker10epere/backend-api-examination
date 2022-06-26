@@ -8,7 +8,7 @@ import { UserPayload } from '../interfaces/jwt.interface'
 import { verifyAuth, parseTokenFromBearer } from '../utils/jwt.util'
 import { isTypePresent } from '../utils/type-checker.util'
 
-const auth = async (
+const checkAuth = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -76,7 +76,7 @@ const checkAdmin = async (
   }
 
   if (!isAdmin) {
-    res.status(401).send({ error: 'user not admin' })
+    res.status(401).send({ message: 'user not admin' })
     return
   }
   next()
@@ -99,4 +99,4 @@ const checkIsAdmin = async (
   }
 }
 
-export { auth, checkAdmin }
+export { checkAuth, checkAdmin }
