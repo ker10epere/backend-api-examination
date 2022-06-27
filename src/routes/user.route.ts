@@ -7,7 +7,7 @@ import { userHandler } from './user.handler'
 
 const router = Router()
 
-router.get('/', checkAuth, userHandler.listUsers)
+router.get('/', checkAuth, checkAdmin, userHandler.listUsers)
 router.get(
   '/:id',
   checkAuth,

@@ -13,7 +13,7 @@ function parseTokenFromBearer(authHeader: string): string {
 function verifyAuth({
   headers: { authorization },
 }: Request): UserPayload | ErrorMessage {
-  if (!isTypePresent<string>(authorization))
+  if (!isTypePresent<string>(authorization) || !authorization)
     return { error: 'authorization undefined' }
 
   const indexOfBearer = authorization.indexOf('Bearer ')
