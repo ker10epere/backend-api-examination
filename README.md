@@ -19,6 +19,8 @@ This is a basic user management system API implementing authentication (login pa
 
 # SETUP
 
+## Installation of NodeJS
+
 Download and install nodejs from [nodejs.dev](https://nodejs.dev/download)
 After installation, type this in terminal.
 
@@ -28,12 +30,29 @@ After installation, type this in terminal.
 
 - `npm -v`
 
-To run this project, run this in terminal in root of the project where package.json is located
+## Installation of Database
+
+> To make this project working on your computer (local environment), you need to setup first your computer by intalling this requirements.
+
+This project uses MySQL as database, so we need to install [MySQL Server Community Edition](https://dev.mysql.com/downloads/installer/).
+
+- download binary/executable file
+- install MySQL
+- leave port as default to 3306
+- create a user { named: "**_root_**" , password: "**_mysql_**" } **_(double quotes not included)_**
+- login to root user in mysql CLI and create database named "**_test_**" **_(double quotes not included)_**
+
+## Installation of Node Dependencies
+
+> This is the internal dependencies where the codes of this project depends on.
+
+Install this project's dependency, by running this in terminal in root of the project where package.json is located
 
 - `npm i`
 
 # RUNNING THIS SERVER
 
+After you've
 To run this project, run this in terminal in root of the project where package.json is located
 
 - `npm start` or `npm run dev`
@@ -42,5 +61,5 @@ To run this project, run this in terminal in root of the project where package.j
 
 To run test cases, run this in terminal in root of the project where package.json is located
 
-- Running all test in the project run `npm test`
-- Running single test in the project run `npm test [filename of the file to test]`
+- To run all test in the project run `npm test`
+- To run single test in the project run `npm test -- [filename of the file to test]`
