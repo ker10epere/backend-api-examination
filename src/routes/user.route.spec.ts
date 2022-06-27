@@ -253,3 +253,72 @@ describe('Test User Route on updating of user', () => {
       .expect(200)
   })
 })
+
+describe('Test User Route on deleting of user', () => {
+  let ds: DataSource
+  let app: Express
+  let userTestData: UserTestData
+
+  const sampleUserIds = {
+    id: [2],
+  }
+
+  beforeEach(async () => {
+    ds = await dataSource.initialize()
+    app = express()
+    app.use(express.json())
+    app.use(dataSourceProvider(ds))
+
+    app.use(userRouter)
+
+    userTestData = await initializeTestData(ds)()
+  })
+
+  afterEach((done) => {
+    ds.destroy().then(() => done())
+  })
+
+  test('It should response 401 code on user deletion failed, if user is not signed in', async () => {
+    return await request(app)
+      .delete('/')
+      .send(sampleUserIds)
+      .set('Content-Type', 'application/json')
+      .expect(401)
+  })
+
+  test('It should response 401 code on user deletion failed, if user is signed in, but not admin', async () => {
+    const {
+      generatedUser: { token },
+    } = userTestData
+    const bearerToken = toBearerToken(token)
+
+    return await request(app)
+      .delete('/')
+      .send(sampleUserIds)
+      .set('Content-Type', 'application/json')
+      .set('Authorization', bearerToken)
+      .expect(401)
+  })
+
+  test('It should response 400 code on user deletion failed, if user is admin, but not provided proper data', async () => {
+    const { token } = userTestData.generatedUserAdmin
+    const bearerToken = toBearerToken(token)
+    return await request(app)
+      .delete('/')
+      .send({ error: 'error' })
+      .set('Content-Type', 'application/json')
+      .set('Authorization', bearerToken)
+      .expect(400)
+  })
+
+  test('It should response 201 code on user deletion success, if user is admin', async () => {
+    const { token } = userTestData.generatedUserAdmin
+    const bearerToken = toBearerToken(token)
+    return await request(app)
+      .delete('/')
+      .send(sampleUserIds)
+      .set('Content-Type', 'application/json')
+      .set('Authorization', bearerToken)
+      .expect(200)
+  })
+})
