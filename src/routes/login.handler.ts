@@ -26,7 +26,9 @@ async function login(req: Request, res: Response) {
 
   const token = generateUserToken(username)
 
-  userRepo.update({ id: foundUser.id }, { token })
-  res.json({ token })
+  await userRepo.update({ id: foundUser.id }, { token })
+  await res.status(200).send({ token })
+
+  return
 }
 export const loginHandler = { login }

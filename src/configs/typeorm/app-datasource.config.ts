@@ -19,7 +19,7 @@ export const dataSourceOptions: DataSourceOptions = {
   type: 'mysql',
   url: DATABASE_URL,
   synchronize: isDevEnv,
-  logging: true,
+  logging: false,
   entities: [entitiesMatcher],
   migrations: [migrationsMatcher],
   dropSchema: false,

@@ -5,7 +5,7 @@ import { dataSourceProvider } from './commons/middlewares/datasource.middleware'
 const { PORT = 3000 } = process.env
 
 AppDataSource.initialize()
-  .then(async (ds) => {
+  .then(async (ds): Promise<void> => {
     const app = express()
 
     app.use(dataSourceProvider(ds))

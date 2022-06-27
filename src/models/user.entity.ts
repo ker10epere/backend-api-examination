@@ -1,5 +1,11 @@
 import { compare } from 'bcryptjs'
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 import { generateHash } from '../commons/utils/hash.util'
 
 @Entity('users')
@@ -43,7 +49,9 @@ export class User {
   }
 
   @BeforeInsert()
+  @BeforeUpdate()
   async setPassword(password: string): Promise<void> {
-    this.password = await generateHash(password || this.password)
+    if (password || this.password)
+      this.password = await generateHash(password || this.password)
   }
 }
