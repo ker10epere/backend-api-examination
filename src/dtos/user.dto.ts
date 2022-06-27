@@ -38,7 +38,10 @@ export class AddUserDTO {
   @IsString()
   @MinLength(2)
   @IsNotEmpty()
-  @Matches(/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/)
+  @Matches(/^(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})$/, {
+    message:
+      'phone number must be in the format of philippine numbers ex.(+63 9## ### #### | 09#########)',
+  })
   contactPhoneNumber?: string
 
   @IsString()
@@ -64,32 +67,30 @@ export class EditUserDTO {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MinLength(2)
   firstName?: string
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MinLength(2)
   lastName?: string
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MinLength(2)
   address?: string
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MinLength(2)
   postcode?: string
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  @Matches(/(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})/)
+  @Matches(/^(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})$/, {
+    message:
+      'phone number must be in the format of philippine numbers ex.(+63 9## ### #### | 09#########)',
+  })
   contactPhoneNumber?: string
 
   @IsOptional()
@@ -100,18 +101,15 @@ export class EditUserDTO {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MinLength(3)
   username?: string
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MinLength(2)
   password?: string
 
   @IsOptional()
-  @IsNotEmpty()
   @IsString()
   @MinLength(2)
   token?: string

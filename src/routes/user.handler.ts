@@ -1,6 +1,6 @@
 import { Response, Request } from 'express'
 import { MyRequest } from '../commons/interfaces/express.interface'
-import { DeleteUserDTO } from '../dtos/user.dto'
+import { DeleteUserDTO, EditUserDTO } from '../dtos/user.dto'
 import { User } from '../models/user.entity'
 
 async function createUser(
@@ -14,6 +14,36 @@ async function createUser(
   const user = body as User
   await userRepo.insert(user)
   return res.status(201).send()
+}
+
+async function editUser(req: Request, res: Response): Promise<unknown> {
+  const {
+    dataSource: { userRepo },
+    body,
+  } = req as MyRequest
+
+  const userBody = body as EditUserDTO
+
+  const foundUser = await userRepo.findOne({
+    where: {
+      id: userBody.id,
+    },
+  })
+
+  if (!foundUser) {
+    res.status(400).send({ error: 'no user found to update' })
+    return
+  }
+  try {
+    const userToSave = userRepo.create(userBody)
+    await userRepo.save(userToSave)
+  } catch (error) {
+    res.status(400).send({ error })
+    return
+  }
+
+  res.status(200).send()
+  return
 }
 
 async function getUser(req: Request, res: Response): Promise<unknown> {
@@ -61,4 +91,10 @@ async function deleteUsers(
   }
 }
 
-export const userHandler = { getUser, listUsers, createUser, deleteUsers }
+export const userHandler = {
+  getUser,
+  listUsers,
+  createUser,
+  editUser,
+  deleteUsers,
+}

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { checkAdmin, checkAuth } from '../commons/middlewares/auth.middleware'
 import { validateBody } from '../commons/middlewares/validator.middleware'
-import { DeleteUserDTO } from '../dtos/user.dto'
+import { AddUserDTO, DeleteUserDTO, EditUserDTO } from '../dtos/user.dto'
 import { User } from '../models/user.entity'
 import { userHandler } from './user.handler'
 
@@ -19,8 +19,15 @@ router.post(
   '/',
   checkAuth,
   checkAdmin,
-  validateBody(User),
+  validateBody(AddUserDTO),
   userHandler.createUser
+)
+router.patch(
+  '/',
+  checkAuth,
+  checkAdmin,
+  validateBody(EditUserDTO),
+  userHandler.editUser
 )
 router.delete(
   '/',
