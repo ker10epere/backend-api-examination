@@ -19,6 +19,7 @@ describe('Test Login Route', () => {
     app = express()
     app.use(express.json())
     app.use(dataSourceProvider(ds))
+
     app.use(loginRouter)
 
     userTestData = await initializeTestData(ds)()
