@@ -18,7 +18,7 @@
     "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop",
     "typeorm-extension": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js",
     "seed": "env-cmd ts-node src/database/seeder.typeorm.executable.ts",
-    "test": "env-cmd jest"
+    "test": "env-cmd jest --runInBand"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
