@@ -69,3 +69,17 @@ To run test cases, run this in terminal in root of the project where package.jso
 To generate nth amount of users run
 
 - `npm run seed user <number of users to generate>`
+
+# MIGRATION
+
+To generate migration run
+
+- `npm run migration:generate`
+
+To apply generated migration descending by date
+
+- `npm run migration:run`
+
+To revert migration from the last migration run
+
+- `npm run migration:revert`
