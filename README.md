@@ -63,3 +63,9 @@ To run test cases, run this in terminal in root of the project where package.jso
 
 - To run all test in the project run `npm test`
 - To run single test in the project run `npm test -- [filename of the file to test]`
+
+# SEEDING
+
+To generate nth amount of users run
+
+- `npm run seed user <number of users to generate>`
